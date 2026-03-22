@@ -134,5 +134,6 @@ app.delete('/api/donors/:id', (req, res) => {
 });
 
 // ── START ───────────────────────────────────────────────────────────────────
-const PORT = 3000;
+// ✅ FIX: Use Railway's dynamic PORT, fallback to 3000 for local dev
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
