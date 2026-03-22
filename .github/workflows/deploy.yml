@@ -33,13 +33,13 @@ jobs:
       - name: ✅ Verify required files exist
         run: |
           echo "Checking required project files..."
-          test -f server.js       && echo "✅ server.js found"       || exit 1
-          test -f package.json    && echo "✅ package.json found"    || exit 1
-          test -f public/index.html  && echo "✅ index.html found"   || exit 1
-          test -f public/portal.html && echo "✅ portal.html found"  || exit 1
+          test -f server.js          && echo "✅ server.js found"       || exit 1
+          test -f package.json       && echo "✅ package.json found"    || exit 1
+          test -f public/index.html  && echo "✅ index.html found"      || exit 1
+          test -f public/portal.html && echo "✅ portal.html found"     || exit 1
           echo "✅ All required files present!"
 
-      - name: 📋 Show Node & npm version
+      - name: 📋 Show Node and npm version
         run: |
           echo "Node version: $(node -v)"
           echo "NPM version: $(npm -v)"
@@ -55,8 +55,10 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v3
 
-      - name: 🚂 Deploy to Railway
-        uses: bervProject/railway-deploy@main
-        with:
-          railway_token: ${{ secrets.RAILWAY_TOKEN }}
-          service: LifeFlow
+      - name: 🚂 Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: 🚀 Deploy to Railway
+        run: railway up --detach
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
