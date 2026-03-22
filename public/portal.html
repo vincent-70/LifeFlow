@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donor Portal — LifeFlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo"><span class="drop">🩸</span> LifeFlow</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="portal.html" class="active">Donor Portal</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <h1>Donor <span>Portal</span></h1>
+  <p>Register, search, and manage blood donor records across India.</p>
+</div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <button class="tab-btn active" onclick="switchTab('register', this)">🩸 Register Donor</button>
+  <button class="tab-btn"        onclick="switchTab('search',   this)">🔍 Find Donors</button>
+  <button class="tab-btn"        onclick="switchTab('all',      this)">📋 All Donors</button>
+</div>
+
+<div class="container">
+
+  <!-- ── REGISTER TAB ── -->
+  <div class="tab-section active" id="tab-register">
+    <span class="section-label">New Registration</span>
+    <h2 class="section-title">Register as a Blood Donor</h2>
+
+    <div class="form-card">
+      <form id="registerForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Full Name <span>*</span></label>
+            <input type="text" id="reg-name" placeholder="e.g. Arjun Sharma" required/>
+          </div>
+          <div class="form-group">
+            <label>Age <span>*</span></label>
+            <input type="number" id="reg-age" min="18" max="65" placeholder="18–65 years" required/>
+          </div>
+          <div class="form-group">
+            <label>Gender <span>*</span></label>
+            <select id="reg-gender" required>
+              <option value="">Select Gender</option>
+              <option>Male</option><option>Female</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Blood Group <span>*</span></label>
+            <select id="reg-blood" required>
+              <option value="">Select Blood Group</option>
+              <option>A+</option><option>A−</option>
+              <option>B+</option><option>B−</option>
+              <option>O+</option><option>O−</option>
+              <option>AB+</option><option>AB−</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Mobile Number <span>*</span></label>
+            <input type="tel" id="reg-mobile" maxlength="10" placeholder="10-digit mobile number" required/>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="reg-email" placeholder="optional@email.com"/>
+          </div>
+          <div class="form-group">
+            <label>State <span>*</span></label>
+            <select id="reg-state" required>
+              <option value="">Select State</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>City / District <span>*</span></label>
+            <input type="text" id="reg-city" placeholder="e.g. Bengaluru" required/>
+          </div>
+          <div class="form-group full">
+            <label>Address</label>
+            <textarea id="reg-address" placeholder="Full address (optional)"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Last Donation Date</label>
+            <input type="date" id="reg-lastdon"/>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-ghost" onclick="clearForm()">✕ Clear</button>
+          <button type="submit" class="btn-primary">🩸 &nbsp; Register Donor</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── SEARCH TAB ── -->
+  <div class="tab-section" id="tab-search">
+    <span class="section-label">Find Donors</span>
+    <h2 class="section-title">Search Blood Donors</h2>
+
+    <div class="search-card">
+      <div class="search-row">
+        <div class="form-group">
+          <label>Blood Group</label>
+          <select id="s-blood">
+            <option value="">All Blood Groups</option>
+            <option>A+</option><option>A−</option>
+            <option>B+</option><option>B−</option>
+            <option>O+</option><option>O−</option>
+            <option>AB+</option><option>AB−</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>State</label>
+          <select id="s-state"><option value="">All States</option></select>
+        </div>
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" id="s-city" placeholder="City / District"/>
+        </div>
+        <button class="btn-primary" onclick="searchDonors()">🔍 Search</button>
+      </div>
+    </div>
+
+    <div id="search-results">
+      <div class="empty-state">
+        <div class="icon">🔍</div>
+        <p>Use the filters above to find blood donors near you.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ALL DONORS TAB ── -->
+  <div class="tab-section" id="tab-all">
+    <div class="results-header">
+      <div>
+        <span class="section-label">Directory</span>
+        <h2 class="section-title" style="margin-bottom:0">All Registered Donors</h2>
+      </div>
+      <span class="result-count">Total: <span id="total-count">0</span></span>
+    </div>
+    <div id="all-results">
+      <div class="empty-state"><div class="icon">💾</div><p>Loading donors...</p></div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- ── EDIT MODAL ── -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeEdit()">✕</button>
+    <h2>✏️ Edit Donor</h2>
+    <input type="hidden" id="edit-id"/>
+    <div class="form-grid">
+      <div class="form-group"><label>Full Name <span>*</span></label><input type="text" id="edit-name" required/></div>
+      <div class="form-group"><label>Age <span>*</span></label><input type="number" id="edit-age" min="18" max="65" required/></div>
+      <div class="form-group">
+        <label>Gender <span>*</span></label>
+        <select id="edit-gender"><option>Male</option><option>Female</option><option>Other</option></select>
+      </div>
+      <div class="form-group">
+        <label>Blood Group <span>*</span></label>
+        <select id="edit-blood">
+          <option>A+</option><option>A−</option><option>B+</option><option>B−</option>
+          <option>O+</option><option>O−</option><option>AB+</option><option>AB−</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Mobile <span>*</span></label><input type="tel" id="edit-mobile" maxlength="10" required/></div>
+      <div class="form-group"><label>Email</label><input type="email" id="edit-email"/></div>
+      <div class="form-group">
+        <label>State <span>*</span></label>
+        <select id="edit-state" required><option value="">Select State</option></select>
+      </div>
+      <div class="form-group"><label>City <span>*</span></label><input type="text" id="edit-city" required/></div>
+      <div class="form-group full"><label>Address</label><textarea id="edit-address"></textarea></div>
+      <div class="form-group"><label>Last Donation</label><input type="date" id="edit-lastdon"/></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-ghost" onclick="closeEdit()">Cancel</button>
+      <button class="btn-primary" onclick="saveEdit()">💾 &nbsp; Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── THANK YOU POPUP ── -->
+<div class="thankyou-overlay" id="tyOverlay">
+  <div class="thankyou-box">
+    <div class="ty-icon">🩸</div>
+    <div class="ty-title">Thank You!</div>
+    <div class="ty-name" id="ty-name"></div>
+    <p class="ty-msg">
+      Your registration is a testament to your boundless compassion. Every drop of blood you share
+      carries the warmth of your heart to someone fighting for their life. You are not just a donor —
+      you are a <strong>hero</strong>, a beacon of hope, and a reminder that humanity is still beautiful.<br><br>
+      <em style="color:var(--rose);">"In giving blood, you give the most precious gift of all — the gift of life."</em>
+    </p>
+    <button class="ty-close" onclick="closeThankyou()">✨ Continue</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<footer>
+  <p>Made with ❤️ for India · <a href="index.html">Home</a> · <a href="about.html">About</a></p>
+  <p style="margin-top:0.5rem">© 2024 LifeFlow · Saving Lives Across India</p>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
