@@ -14,7 +14,7 @@ const db = mysql.createConnection({
   host:     process.env.MYSQLHOST     || 'localhost',
   user:     process.env.MYSQLUSER     || 'root',
   password: process.env.MYSQLPASSWORD || 'yourpassword',
-  database: process.env.MYSQLDATABASE || 'blood',
+  database: process.env.MYSQL_DATABASE || 'blood',
   port:     process.env.MYSQLPORT     || 3306
 });
 
