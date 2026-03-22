@@ -1,4 +1,4 @@
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 const express = require('express');
 const mysql   = require('mysql2');
 const cors    = require('cors');
@@ -14,7 +14,7 @@ const db = mysql.createConnection({
   host:     process.env.MYSQLHOST     || 'localhost',
   user:     process.env.MYSQLUSER     || 'root',
   password: process.env.MYSQLPASSWORD || 'yourpassword',
-  database: process.env.MYSQL_DATABASE || 'blood',
+  database: process.env.MYSQLDATABASE || 'blood',
   port:     process.env.MYSQLPORT     || 3306
 });
 
